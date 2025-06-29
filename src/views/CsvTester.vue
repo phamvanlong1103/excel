@@ -1,6 +1,6 @@
 <template>
     <div class="p-6 space-y-6 max-w-6xl mx-auto">
-        <h1 class="text-2xl font-semibold">CSV Tester (PapaParse + d3‑array)</h1>
+        <h1 class="text-2xl font-semibold">CSV Tester by Ylc</h1>
 
         <!-- Upload CSV -->
         <input type="file" accept=".csv" @change="onFile" />
