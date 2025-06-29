@@ -28,16 +28,17 @@
                 <TableCellsIcon class="w-4 h-4 mr-2" />
                 Data Sources
               </router-link>
+              
               <router-link
-                to="/total"
+                to="/csv-tester"
                 class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200"
-                :class="$route.name === 'Total' 
+                :class="$route.name === 'CsvTester' 
                   ? 'border-primary-500 text-primary-600' 
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
               >
-                <BoltIcon class="w-4 h-4 mr-2" />
-                Total
-              </router-link>
+                <ChartBarIcon class="w-4 h-4 mr-2" />
+                Csv Tester
+            </router-link>
             </div>
           </div>
         </div>

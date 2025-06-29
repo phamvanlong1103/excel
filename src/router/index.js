@@ -5,6 +5,8 @@ import QuickDashboard from '../views/QuickDashboard.vue';
 import DashboardStore from '../views/DashboardStore.vue';
 import TemplateDesigner from '../views/TemplateDesigner.vue';
 import Total from '../views/Total.vue';
+import CsvTester from '../views/CsvTester.vue';
+
 const routes = [
     {
         path: '/',
@@ -40,6 +42,11 @@ const routes = [
         path: '/total',
         name: 'Total',
         component: Total
+    },
+    {
+        path: '/csv-tester',
+        name: 'CsvTester',
+        component: CsvTester
     }
 ];
 export const router = createRouter({

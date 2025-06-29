@@ -37,11 +37,6 @@ const routes = [
     name: 'TemplateDesigner',
     component: TemplateDesigner
   },
-  {
-    path: '/total',
-    name: 'Total',
-    component: Total
-  }
 ]
 
 export const router = createRouter({
