@@ -220,18 +220,18 @@ function resetAll() {
     csv.columns = []
 }
 async function onFile(e: Event) {
-  const f = (e.target as HTMLInputElement).files?.[0]
-  if (!f) return
-  await csv.loadFile(f)
-  prodCol.value = prodOptions.value[0] || columns.value[0] || ''
-  qtyCol.value  = qtyOptions.value[0]  || columns.value.find(c => c !== prodCol.value) || ''
+    const f = (e.target as HTMLInputElement).files?.[0]
+    if (!f) return
+    await csv.loadFile(f)
+    prodCol.value = prodOptions.value[0] || columns.value[0] || ''
+    qtyCol.value = qtyOptions.value[0] || columns.value.find(c => c !== prodCol.value) || ''
 }
 
 // 4) Tính flag isNumeric dùng chung
 const isNumeric = computed(() =>
-  qtyCol.value
-    ? isNumericColumn(qtyCol.value)
-    : false
+    qtyCol.value
+        ? isNumericColumn(qtyCol.value)
+        : false
 )
 
 /* prevent duplicate selection */
@@ -290,9 +290,9 @@ const modalKeysFiltered = computed(() => {
    Totals calculation
 -------------------------------------------------- */
 const qtyHeader = computed(() =>
-  qtyCol.value
-    ? `${qtyCol.value} (${isNumeric.value ? 'tổng' : 'đếm'})`
-    : 'Số liệu'
+    qtyCol.value
+        ? `${qtyCol.value} (${isNumeric.value ? 'tổng' : 'đếm'})`
+        : 'Số liệu'
 )
 
 const totalsMap = computed(() => {
@@ -309,25 +309,43 @@ const totalsMap = computed(() => {
     return map
 })
 const totalsArr = computed<[string, number][]>(() => {
-  if (!prodCol.value || !qtyCol.value) return []
-  const map = new Map<string, number>()
-  const rep = new Map<string, string>()
-  csv.rows.forEach(r => {
-    const raw = String(r[prodCol.value] ?? '').trim()
-    if (!raw) return
-    const key = normalize.value
-      ? canonicalBase(raw)
-      : raw
-    if (!rep.has(key)) rep.set(key, raw)
-    const n = isNumeric.value
-      ? (toNumber(r[qtyCol.value]) || 0)
-      : 1
-    map.set(key, (map.get(key) || 0) + n)
-  })
-  return Array.from(map.entries())
-    .map(([k,v]) => [rep.get(k)!, v])
-    .sort((a,b) => b[1] - a[1])
+    if (!prodCol.value || !qtyCol.value) return []
+
+    const map = new Map<string, number>()
+    const rep = new Map<string, string>()
+    let lastGroup = ''
+
+    for (const r of csv.rows) {
+        // 1) Lấy raw, trim, fill-down nếu blank
+        let raw = String(r[prodCol.value] ?? '').trim()
+        if (!raw) raw = lastGroup
+        lastGroup = raw
+
+        if (!raw) continue
+
+        // 2) canonical key để gộp
+        const key = normalize.value
+            ? canonicalBase(raw)
+            : raw
+
+        // 3) rep map lưu display lần đầu (vẫn giữ dấu gốc)
+        if (!rep.has(key)) rep.set(key, raw)
+
+        // 4) Tính num: nếu isNumeric => toNumber, else 1
+        const num = isNumericColumn(qtyCol.value)
+            ? (toNumber(r[qtyCol.value]) || 0)
+            : 1
+
+        // 5) Cộng dồn
+        map.set(key, (map.get(key) || 0) + num)
+    }
+
+    // 6) Trả mảng [display, total] giảm dần
+    return Array.from(map.entries())
+        .map(([k, v]) => [rep.get(k) as string, v])
+        .sort((a, b) => b[1] - a[1])
 })
+
 const removedKeys = ref<Set<string>>(new Set())
 function removeKey(key: string) {
     removedKeys.value.add(key)
