@@ -37,6 +37,7 @@ import { ExclamationTriangleIcon, ChartBarIcon } from '@heroicons/vue/24/outline
 import { useDataSourceStore } from '../stores/dataSource'
 import type { ChartConfig } from '../stores/chart'
 import KPICard from './KPICard.vue'
+import DonutChart from './DonutChart.vue'
 
 // Register Chart.js components
 ChartJS.register(
@@ -365,7 +366,9 @@ const createChart = async () => {
       // Filter out null/undefined values and ensure numeric y-values
       const validData = dataSource.rows
         .map((row, index) => ({
-          x: row[props.chart.xAxis!],
+          x: Array.isArray(props.chart.xAxis)
+            ? props.chart.xAxis.map((field: string) => row[field]).join(' | ')
+            : row[props.chart.xAxis!],
           y: Number(row[props.chart.yAxis!])
         }))
         .filter(item => item.x != null && item.x !== '' && !isNaN(item.y))

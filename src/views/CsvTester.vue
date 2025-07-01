@@ -145,7 +145,7 @@ const qtyOptions = computed(() =>
 
 // modal để chỉnh loại
 const showTypeModal = ref(false)
-const typeDraft = reactive<Record<string, 'string'>>({})
+const typeDraft = reactive<Record<string, 'string'>>({}) as any
 
 function openTypeModal() {
     Object.keys(typeDraft).forEach(k => delete typeDraft[k])
@@ -308,7 +308,7 @@ const totalsMap = computed(() => {
     })
     return map
 })
-const totalsArr = computed<[string, number][]>(() => {
+const totalsArr = computed<[string, number][]>(():any => {
     if (!prodCol.value || !qtyCol.value) return []
 
     const map = new Map<string, number>()
@@ -343,8 +343,8 @@ const totalsArr = computed<[string, number][]>(() => {
     // 6) Trả mảng [display, total] giảm dần
     return Array.from(map.entries())
         .map(([k, v]) => [rep.get(k) as string, v])
-        .sort((a, b) => b[1] - a[1])
-})
+        .sort((a, b) => Number(b[1]) - Number(a[1]))
+}) as any
 
 const removedKeys = ref<Set<string>>(new Set())
 function removeKey(key: string) {
@@ -356,18 +356,18 @@ const filteredTotals = computed(() => {
         ? canonicalBase(searchTerm.value)
         : searchTerm.value.trim()
     return totalsArr.value
-        .filter(([k]) => !removedKeys.value.has(k))
-        .filter(([k]) => !kw || canonicalBase(k).includes(kw))
+        .filter(([k]: [string, number]) => !removedKeys.value.has(k))
+        .filter(([k]: [string, number]) => !kw || canonicalBase(k).includes(kw))
 })
 /* copy table */
 function copyTable() {
-    const lines = [[prodCol.value, qtyHeader.value], ...filteredTotals.value.map(([k, v]) => [k, v.toString()])]
+    const lines = [[prodCol.value, qtyHeader.value], ...filteredTotals.value.map(([k, v]: [string, number]) => [k, v.toString()])]
     const tsv = lines.map(l => l.join('\t')).join('\n')
     navigator.clipboard.writeText(tsv)
 }
 function exportCsv() {
-    const rows = filteredTotals.value.map(([k, v]) => ({ [prodCol.value]: k, [qtyCol.value]: v }))
-    const csvStr = [Object.keys(rows[0]).join(','), ...rows.map(r => Object.values(r).join(','))].join('\n')
+    const rows = filteredTotals.value.map(([k, v]: [string, number]) => ({ [prodCol.value]: k, [qtyCol.value]: v }))
+    const csvStr = [Object.keys(rows[0]).join(','), ...rows.map((r: ArrayLike<unknown> | { [s: string]: unknown }) => Object.values(r).join(','))].join('\n')
     const blob = new Blob([csvStr], { type: 'text/csv;charset=utf-8;' })
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
@@ -382,7 +382,7 @@ pdfMake.vfs = vfsFonts
 function exportPdf() {
     const body = [
         [prodCol.value, qtyHeader.value],
-        ...filteredTotals.value.map(([k, v]) => [
+        ...filteredTotals.value.map(([k, v]: [string, number]) => [
             k,
             isNumeric.value ? formatNumber(v as number) : v,
         ]),

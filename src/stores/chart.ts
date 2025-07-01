@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
+export type ChartType = 'bar' | 'line' | 'pie' | 'card' | 'scatter' | 'area' | 'donut' | 'radar' | 'bubble' // thêm area, donut nếu cần
+
 export interface ChartConfig {
   id: string
   name: string
-  type: 'bar' | 'line' | 'pie' | 'scatter' | 'card'
+  type: ChartType
   dataSourceId: string
   xAxis?: string | string[]
   yAxis?: string

@@ -5,41 +5,30 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center h-16 justify-between">
           <div class="flex items-center gap-2">
-            <button
-              @click="goBack"
-              class="mr-4 text-gray-400 hover:text-gray-600"
-            >
+            <button @click="goBack" class="mr-4 text-gray-400 hover:text-gray-600">
               <ArrowLeftIcon class="h-6 w-6" />
             </button>
-            <input
-              id="dashboardName"
-              v-model="dashboardName"
-              type="text"
-              placeholder="Enter dashboard name"
-              class="text-xl font-semibold text-gray-900 bg-transparent border-none focus:ring-0 focus:border-b-2 focus:border-primary-500 px-1 py-0.5 w-64"
-            />
+            <input id="dashboardName" v-model="dashboardName" type="text" placeholder="Enter dashboard name"
+              class="text-xl font-semibold text-gray-900 bg-transparent border-none focus:ring-0 focus:border-b-2 focus:border-primary-500 px-1 py-0.5 w-64" />
           </div>
           <div class="flex items-center gap-3 ml-auto">
             <button
               class="inline-flex items-center px-4 py-2 border border-primary-200 text-sm font-medium rounded-md text-primary-700 bg-white hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
-              title="Share dashboard"
-            >
+              title="Share dashboard">
               <ShareIcon class="h-4 w-4 mr-2" />
               Share
             </button>
-            <button
-              @click="previewMode = true"
-              :disabled="charts.length === 0"
-              class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-primary-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A2 2 0 0020 6.382V5a2 2 0 00-2-2H6a2 2 0 00-2 2v1.382a2 2 0 00.447 1.342L9 10m6 0v4m0 0l-4.553 2.276A2 2 0 014 17.618V19a2 2 0 002 2h12a2 2 0 002-2v-1.382a2 2 0 00-.447-1.342L15 14z" /></svg>
+            <button @click="previewMode = true" :disabled="charts.length === 0"
+              class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-primary-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 10l4.553-2.276A2 2 0 0020 6.382V5a2 2 0 00-2-2H6a2 2 0 00-2 2v1.382a2 2 0 00.447 1.342L9 10m6 0v4m0 0l-4.553 2.276A2 2 0 014 17.618V19a2 2 0 002 2h12a2 2 0 002-2v-1.382a2 2 0 00-.447-1.342L15 14z" />
+              </svg>
               Preview
             </button>
-            <button
-              @click="saveDashboard"
-              :disabled="!dashboardName || charts.length === 0"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-            >
+            <button @click="saveDashboard" :disabled="!dashboardName || charts.length === 0"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
               <DocumentCheckIcon class="h-4 w-4 mr-2" />
               Save Dashboard
             </button>
@@ -50,110 +39,61 @@
 
     <div class="flex h-[calc(100vh-4rem)]">
       <!-- Left Sidebar with Tabs -->
-      <DataPanel
-        v-if="!previewMode"
-        ref="dataPanelRef"
-        :selectedDataSources="selectedDataSources"
-        :expandedDataSources="expandedDataSources"
-        :isFieldInUse="isFieldInUse"
-        :width="leftSidebarWidth"
-        @open-manager="openDataSourceManager"
-        @toggle-expand="toggleDataSource"
-        @field-drag="onFieldDragStart"
-        @update-selected-data-sources="updateSelectedDataSources"
-        @toggle-dashboard-tabs="handleToggleDashboardTabs"
-      />
+      <DataPanel v-if="!previewMode" ref="dataPanelRef" :selectedDataSources="selectedDataSources"
+        :expandedDataSources="expandedDataSources" :isFieldInUse="isFieldInUse" :width="leftSidebarWidth"
+        @open-manager="openDataSourceManager" @toggle-expand="toggleDataSource" @field-drag="onFieldDragStart"
+        @update-selected-data-sources="updateSelectedDataSources" @toggle-dashboard-tabs="handleToggleDashboardTabs" />
 
       <!-- Draggable Divider (between left sidebar and chart type col) -->
-      <div
-        v-if="!previewMode"
-        class="resizer"
-        @mousedown="startResizing('left')"
-        :style="{ cursor: 'col-resize', width: '6px', background: '#e5e7eb', zIndex: 20 }"
-      ></div>
-
+      <div v-if="!previewMode" class="resizer" @mousedown="startResizing('left')"
+        :style="{ cursor: 'col-resize', width: '6px', background: '#e5e7eb', zIndex: 20 }"></div>
       <!-- Chart Type & Properties Column -->
-      <ChartPanel
-        v-if="!previewMode"
-        :chartTypes="chartTypes"
-        :selectedChartType="selectedChartType"
-        :chartConfig="chartConfig"
-        :colorSchemes="colorSchemes"
-        :colorPalettes="colorPalettes"
-        :isChartConfigValid="isChartConfigValid"
-        :editingChartId="editingChartId"
-        :selectedDataSources="selectedDataSources"
-        :width="chartTypeColWidth"
-        @update:selectedChartType="selectedChartType = $event"
-        @field-drop="onFieldDrop"
+      <ChartPanel v-if="!previewMode" :chartTypes="chartTypes" :selectedChartType="selectedChartType"
+        :chartConfig="chartConfig" :colorSchemes="colorSchemes" :colorPalettes="colorPalettes"
+        :isChartConfigValid="isChartConfigValid" :editingChartId="editingChartId"
+        :selectedDataSources="selectedDataSources" :width="chartTypeColWidth"
+        @update:selectedChartType="selectedChartType = $event" @field-drop="onFieldDrop"
         @remove-x-axis="(idx) => { if (Array.isArray(chartConfig.xAxis)) chartConfig.xAxis.splice(idx, 1) }"
-        @add-or-update-chart="addOrUpdateChart"
-        @cancel-edit="cancelEdit"
-      />
+        @add-or-update-chart="addOrUpdateChart" @cancel-edit="cancelEdit" />
 
       <!-- Draggable Divider (between chart type col and main dashboard) -->
-      <div
-        v-if="!previewMode"
-        class="resizer"
-        @mousedown="startResizing('chartType')"
-        :style="{ cursor: 'col-resize', width: '6px', background: '#e5e7eb', zIndex: 20 }"
-      ></div>
+      <div v-if="!previewMode" class="resizer" @mousedown="startResizing('chartType')"
+        :style="{ cursor: 'col-resize', width: '6px', background: '#e5e7eb', zIndex: 20 }"></div>
 
       <!-- Main Dashboard Area -->
       <div :class="['flex-1 p-3']" style="position:relative;">
         <!-- Tabs UI -->
-        <nav v-if="showDashboardTabs" class="flex gap-2 px-1 mt-0 mb-2" aria-label="Dashboard Tabs" style="align-items: flex-start;">
+        <nav v-if="showDashboardTabs" class="flex gap-2 px-1 mt-0 mb-2" aria-label="Dashboard Tabs"
+          style="align-items: flex-start;">
           <div class="flex gap-2">
             <transition-group name="fade" tag="div" class="flex gap-2">
-              <div
-                v-for="tab in dashboardTabs"
-                :key="tab.id"
-                class="relative group flex items-center"
-                @mouseenter="tabHoverId = tab.id"
-                @mouseleave="tabHoverId = null"
-              >
-                <input
-                  v-if="tab.id === editingTabId"
-                  v-model="editingTabName"
-                  :id="`tab-edit-input-${tab.id}`"
-                  @blur="finishRenameTab(tab.id)"
-                  @keyup.enter="finishRenameTab(tab.id)"
-                  @keyup.esc="cancelRenameTab()"
+              <div v-for="tab in dashboardTabs" :key="tab.id" class="relative group flex items-center"
+                @mouseenter="tabHoverId = tab.id" @mouseleave="tabHoverId = null">
+                <input v-if="tab.id === editingTabId" v-model="editingTabName" :id="`tab-edit-input-${tab.id}`"
+                  @blur="finishRenameTab(tab.id)" @keyup.enter="finishRenameTab(tab.id)" @keyup.esc="cancelRenameTab()"
                   @keydown="handleTabEditKey(tab.id, $event)"
                   class="px-2 py-1 border rounded text-sm w-28 mr-1 focus:ring-2 focus:ring-primary-500"
-                  :style="'transition: box-shadow 0.2s;'"
-                  autofocus
-                />
-                <button
-                  v-else
-                  @click="activeTabId = tab.id"
-                  :class="[
-                    'py-2.5 px-4 text-center font-medium text-sm transition-all duration-200 flex items-center gap-2 rounded-lg shadow-sm border relative',
-                    activeTabId === tab.id
-                      ? 'border-primary-200 text-primary-700 bg-primary-50 shadow-md z-10'
-                      : 'border-gray-200 text-gray-600 bg-white hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md'
-                  ]"
-                  :title="tab.name"
-                >
+                  :style="'transition: box-shadow 0.2s;'" autofocus />
+                <button v-else @click="activeTabId = tab.id" :class="[
+                  'py-2.5 px-4 text-center font-medium text-sm transition-all duration-200 flex items-center gap-2 rounded-lg shadow-sm border relative',
+                  activeTabId === tab.id
+                    ? 'border-primary-200 text-primary-700 bg-primary-50 shadow-md z-10'
+                    : 'border-gray-200 text-gray-600 bg-white hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md'
+                ]" :title="tab.name">
                   <span>{{ tab.name }}</span>
-                  <PencilIcon
-                    v-if="tabHoverId === tab.id"
-                    @click.stop="startRenameTab(tab.id)"
-                    class="h-4 w-4 ml-1 text-gray-400 hover:text-primary-600 cursor-pointer transition-opacity duration-150 opacity-80 group-hover:opacity-100"
-                  />
-            <button
-                    v-if="dashboardTabs.length > 1 && tabHoverId === tab.id"
-                    @click.stop="removeTab(tab.id)"
+                  <PencilIcon v-if="tabHoverId === tab.id" @click.stop="startRenameTab(tab.id)"
+                    class="h-4 w-4 ml-1 text-gray-400 hover:text-primary-600 cursor-pointer transition-opacity duration-150 opacity-80 group-hover:opacity-100" />
+                  <button v-if="dashboardTabs.length > 1 && tabHoverId === tab.id" @click.stop="removeTab(tab.id)"
                     class="ml-1 text-gray-400 hover:text-red-500 bg-transparent rounded-full p-0.5 transition-opacity duration-150 opacity-80 group-hover:opacity-100"
-                    style="z-index:20"
-                  >
+                    style="z-index:20">
                     &times;
-            </button>
+                  </button>
                 </button>
-          </div>
+              </div>
             </transition-group>
-            <button @click="addTab" class="ml-2 px-2 py-1 bg-gray-100 text-gray-500 rounded hover:bg-primary-100 hover:text-primary-700 transition-colors duration-150 focus:outline-none border-none shadow-none">+</button>
-        </div>
+            <button @click="addTab"
+              class="ml-2 px-2 py-1 bg-gray-100 text-gray-500 rounded hover:bg-primary-100 hover:text-primary-700 transition-colors duration-150 focus:outline-none border-none shadow-none">+</button>
+          </div>
         </nav>
         <div class="bg-white rounded-lg shadow-sm h-full">
           <div class="p-6 h-full">
@@ -168,28 +108,31 @@
             </div>
             <!-- GridStack Container -->
             <div v-else ref="gridStackContainer" class="grid-stack h-full">
-              <div
-                v-for="chart in charts"
-                :key="chart.id"
-                class="grid-stack-item"
-                :gs-id="chart.id"
-                :gs-x="chart.layout.x"
-                :gs-y="chart.layout.y"
-                :gs-w="chart.layout.w"
-                :gs-h="chart.layout.h"
-              >
+              <div v-for="chart in charts" :key="chart.id" class="grid-stack-item" :gs-id="chart.id"
+                :gs-x="chart.layout.x" :gs-y="chart.layout.y" :gs-w="chart.layout.w" :gs-h="chart.layout.h">
                 <div class="grid-stack-item-content">
                   <div class="chart-header flex justify-end items-center gap-2">
                     <!-- 3-dot menu -->
                     <div class="relative">
-                      <button v-if="!previewMode" @click="toggleChartMenu(chart.id)" class="chart-menu-btn p-1 rounded-full hover:bg-gray-100 focus:outline-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+                      <button v-if="!previewMode" @click="toggleChartMenu(chart.id)"
+                        class="chart-menu-btn p-1 rounded-full hover:bg-gray-100 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                          stroke="currentColor">
+                          <circle cx="5" cy="12" r="1.5" />
+                          <circle cx="12" cy="12" r="1.5" />
+                          <circle cx="19" cy="12" r="1.5" />
+                        </svg>
                       </button>
-                      <div v-if="openChartMenuId === chart.id && !previewMode" class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-30">
-                        <button @click="editChart(chart)" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Edit</button>
-                        <button @click="exportChart(chart, 'pdf')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Export PDF</button>
-                        <button @click="exportChart(chart, 'png')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Export to PNG</button>
-                        <button @click="removeChart(chart.id)" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Remove</button>
+                      <div v-if="openChartMenuId === chart.id && !previewMode"
+                        class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-30">
+                        <button @click="editChart(chart)"
+                          class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Edit</button>
+                        <button @click="exportChart(chart, 'pdf')"
+                          class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Export PDF</button>
+                        <button @click="exportChart(chart, 'png')"
+                          class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Export to PNG</button>
+                        <button @click="removeChart(chart.id)"
+                          class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Remove</button>
                       </div>
                     </div>
                   </div>
@@ -200,20 +143,16 @@
               </div>
             </div>
             <!-- Exit Preview Button -->
-            <button v-if="previewMode" @click="previewMode = false" class="absolute top-4 right-4 z-50 px-4 py-2 bg-white text-primary-700 border border-gray-300 rounded shadow hover:bg-gray-50">Exit Preview</button>
+            <button v-if="previewMode" @click="previewMode = false"
+              class="absolute top-4 right-4 z-50 px-4 py-2 bg-white text-primary-700 border border-gray-300 rounded shadow hover:bg-gray-50">Exit
+              Preview</button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Toast Notification -->
-    <Toast
-      :show="showToast"
-      :type="toastType"
-      :title="toastTitle"
-      :message="toastMessage"
-      @close="hideToast"
-    />
+    <Toast :show="showToast" :type="toastType" :title="toastTitle" :message="toastMessage" @close="hideToast" />
   </div>
 </template>
 
@@ -230,14 +169,9 @@ import {
   PresentationChartLineIcon,
   ChartPieIcon,
   CircleStackIcon,
-  Cog6ToothIcon,
-  ChevronDownIcon,
-  CheckIcon,
   PencilIcon,
-  TrashIcon,
   ShareIcon
 } from '@heroicons/vue/24/outline'
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { GridStack } from 'gridstack'
 import { useDataSourceStore, type DataSourceColumn } from '../stores/dataSource'
 import { useDashboardStore } from '../stores/dashboard'
@@ -247,6 +181,23 @@ import DataPanel from '../components/DataPanel.vue'
 import ChartPanel from '../components/ChartPanel.vue'
 import Toast from '../components/Toast.vue'
 import { nanoid } from 'nanoid'
+import {
+  Chart as ChartJS,
+  Title, Tooltip, Legend,
+  BarElement, LineElement, PointElement, ArcElement,
+  BubbleController, DoughnutController, PolarAreaController, RadarController, ScatterController,
+  CategoryScale, LinearScale, RadialLinearScale
+} from 'chart.js'
+
+ChartJS.register(
+  Title, Tooltip, Legend,
+  // Elements
+  BarElement, LineElement, PointElement, ArcElement,
+  // Controllers
+  BubbleController, DoughnutController, PolarAreaController, RadarController, ScatterController,
+  // Scales
+  CategoryScale, LinearScale, RadialLinearScale
+)
 
 const router = useRouter()
 const route = useRoute()
@@ -268,6 +219,7 @@ const toastType = ref<'success' | 'warning' | 'error' | 'info'>('success')
 const toastTitle = ref('')
 const toastMessage = ref('')
 
+// Preview mode state
 // Current dashboard ID for updates
 const currentDashboardId = ref<string | null>(null)
 
@@ -281,6 +233,7 @@ interface ChartItem {
     h: number
   }
 }
+
 
 // Tabs for dashboard sections
 interface DashboardTab {
@@ -415,7 +368,9 @@ const chartTypes = [
   { value: 'bar', label: 'Bar', icon: ChartBarIcon },
   { value: 'line', label: 'Line', icon: PresentationChartLineIcon },
   { value: 'pie', label: 'Pie', icon: ChartPieIcon },
-  { value: 'scatter', label: 'Scatter', icon: CircleStackIcon }
+  { value: 'scatter', label: 'Scatter', icon: CircleStackIcon },
+  { value: 'bubble', label: 'Bubble', icon: CircleStackIcon },
+  { value: 'radar', label: 'Radar', icon: CircleStackIcon }
 ] as const
 
 const selectedDataSource = computed(() => {
@@ -425,14 +380,33 @@ const selectedDataSource = computed(() => {
 
 const isChartConfigValid = computed(() => {
   if (!selectedChartType.value) return false
-  if (selectedChartType.value === 'pie') {
-    return !!chartConfig.category
-  } else if (selectedChartType.value === 'bar') {
-    return Array.isArray(chartConfig.xAxis) && chartConfig.xAxis.length > 0 && !!chartConfig.yAxis
-  } else {
-    return !!chartConfig.xAxis && !!chartConfig.yAxis
+
+  switch (selectedChartType.value) {
+    case 'pie':
+      return !!chartConfig.category
+
+    case 'bar':
+      return Array.isArray(chartConfig.xAxis) &&
+             chartConfig.xAxis.length > 0 &&
+             !!chartConfig.yAxis
+
+    case 'bubble':       // xAxis (array), yAxis, category
+      return Array.isArray(chartConfig.xAxis) &&
+             chartConfig.xAxis.length > 0 &&
+             !!chartConfig.yAxis &&
+             !!chartConfig.category
+
+    case 'radar':        // xAxis (array), yAxis, category
+      return Array.isArray(chartConfig.xAxis) &&
+             chartConfig.xAxis.length > 0 &&
+             !!chartConfig.yAxis &&
+             !!chartConfig.category
+
+    default:             // line, scatter…
+      return !!chartConfig.xAxis && !!chartConfig.yAxis
   }
 })
+
 
 const onDataSourceChange = () => {
   resetChartConfig()
@@ -463,7 +437,7 @@ const onFieldDrop = (event: DragEvent, target: 'xAxis' | 'yAxis' | 'category') =
   if (!event.dataTransfer) return
   try {
     const fieldData = JSON.parse(event.dataTransfer.getData('text/plain'))
-    
+
     // Validate field type for Y-axis (should be numeric)
     if (target === 'yAxis' && fieldData.type !== 'number') {
       alert('Y-axis requires a numeric field')
@@ -479,6 +453,23 @@ const onFieldDrop = (event: DragEvent, target: 'xAxis' | 'yAxis' | 'category') =
       }
       // For non-bar charts or when replacing a single field, allow the change
       // This will effectively replace the existing field and data source
+    }
+    if (selectedChartType.value == 'bubble') {
+      // bubble cần xAxis, yAxis và category (kích thước)
+      if (['xAxis', 'yAxis', 'category'].includes(target)) {
+        chartConfig[target] = fieldData.name
+      }
+      chartConfig.dataSourceId = fieldData.dataSourceId
+      return
+    }
+
+    if (selectedChartType.value == 'radar') {
+      // radar cần category và yAxis
+      if (['category', 'yAxis'].includes(target)) {
+        chartConfig[target] = fieldData.name
+      }
+      chartConfig.dataSourceId = fieldData.dataSourceId
+      return
     }
 
     if (target === 'xAxis' && selectedChartType.value === 'bar') {
@@ -510,7 +501,7 @@ const editChart = (chart: ChartItem) => {
   selectedChartType.value = chart.config.type || ''
   chartConfig.title = chart.config.title || ''
   chartConfig.dataSourceId = chart.config.dataSourceId || ''
-  
+
   if (chart.config.type === 'bar') {
     if (Array.isArray(chart.config.xAxis)) {
       chartConfig.xAxis = [...chart.config.xAxis]
@@ -609,7 +600,7 @@ const addChart = () => {
 const removeChart = (chartId: string) => {
   if (confirm('Are you sure you want to remove this chart?')) {
     charts.value = charts.value.filter(chart => chart.id !== chartId)
-    
+
     nextTick(() => {
       initializeGridStack()
     })
@@ -666,7 +657,7 @@ const showToastNotification = (type: 'success' | 'warning' | 'error' | 'info', t
   toastTitle.value = title
   toastMessage.value = message || ''
   showToast.value = true
-  
+
   // Auto-hide after 3 seconds
   setTimeout(() => {
     hideToast()
@@ -681,8 +672,8 @@ const saveDashboard = () => {
   if (!dashboardName.value || charts.value.length === 0) return
 
   try {
-  // Save selected data source IDs
-  const dataSourceIds = selectedDataSources.value.map(ds => ds.id)
+    // Save selected data source IDs
+    const dataSourceIds = selectedDataSources.value.map(ds => ds.id)
 
     if (currentDashboardId.value) {
       // Update existing dashboard
@@ -718,7 +709,7 @@ const saveDashboard = () => {
 
           // Add widget to dashboard
           dashboardStore.addWidget(currentDashboardId.value!, savedChart.id)
-          
+
           // Update widget layout
           const widget = dashboard.widgets[dashboard.widgets.length - 1]
           if (widget) {
@@ -730,33 +721,33 @@ const saveDashboard = () => {
       }
     } else {
       // Create new dashboard
-  const dashboard = dashboardStore.createDashboard(dashboardName.value, dashboardDescription.value, dataSourceIds)
+      const dashboard = dashboardStore.createDashboard(dashboardName.value, dashboardDescription.value, dataSourceIds)
       currentDashboardId.value = dashboard.id
 
-  // Create and save charts, then add widgets
-  charts.value.forEach(chartItem => {
-    // Create the chart in the chart store
-    const savedChart = chartStore.createChart({
-      name: chartItem.config.name!,
-      type: chartItem.config.type!,
-      dataSourceId: chartItem.config.dataSourceId!,
-      xAxis: chartItem.config.xAxis,
-      yAxis: chartItem.config.yAxis,
-      category: chartItem.config.category,
-      title: chartItem.config.title!,
-      backgroundColor: chartItem.config.backgroundColor!,
-      borderColor: chartItem.config.borderColor!
-    })
+      // Create and save charts, then add widgets
+      charts.value.forEach(chartItem => {
+        // Create the chart in the chart store
+        const savedChart = chartStore.createChart({
+          name: chartItem.config.name!,
+          type: chartItem.config.type!,
+          dataSourceId: chartItem.config.dataSourceId!,
+          xAxis: chartItem.config.xAxis,
+          yAxis: chartItem.config.yAxis,
+          category: chartItem.config.category,
+          title: chartItem.config.title!,
+          backgroundColor: chartItem.config.backgroundColor!,
+          borderColor: chartItem.config.borderColor!
+        })
 
-    // Add widget to dashboard
-    dashboardStore.addWidget(dashboard.id, savedChart.id)
-    
-    // Update widget layout
-    const widget = dashboard.widgets[dashboard.widgets.length - 1]
-    if (widget) {
-      dashboardStore.updateWidgetLayout(dashboard.id, widget.id, chartItem.layout)
-    }
-  })
+        // Add widget to dashboard
+        dashboardStore.addWidget(dashboard.id, savedChart.id)
+
+        // Update widget layout
+        const widget = dashboard.widgets[dashboard.widgets.length - 1]
+        if (widget) {
+          dashboardStore.updateWidgetLayout(dashboard.id, widget.id, chartItem.layout)
+        }
+      })
 
       showToastNotification('success', 'Dashboard Created', 'Your dashboard has been successfully created.')
     }
@@ -830,7 +821,7 @@ const toggleDataSource = (id: string) => {
 // Add function to check if a field is in use
 const isFieldInUse = (fieldName: string, dataSourceId: string) => {
   if (!selectedChartType.value || !chartConfig.dataSourceId) return false
-  
+
   // Check if the field is from the same data source as the current chart
   if (chartConfig.dataSourceId !== dataSourceId) return false
 
@@ -882,15 +873,15 @@ onMounted(async () => {
         const chart = chartStore.charts.find(c => c.id === widget.chartId)
         return chart
           ? {
-              id: chart.id,
-              config: { ...chart },
-              layout: {
-                x: widget.x,
-                y: widget.y,
-                w: widget.w,
-                h: widget.h
-              }
+            id: chart.id,
+            config: { ...chart },
+            layout: {
+              x: widget.x,
+              y: widget.y,
+              w: widget.w,
+              h: widget.h
             }
+          }
           : null
       }).filter(Boolean) as ChartItem[]
       await nextTick()
@@ -919,9 +910,11 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.5rem;
 }
+
 .chart-menu-btn {
   color: #6b7280;
 }
+
 .chart-menu-btn:hover {
   color: #374151;
 }
@@ -958,6 +951,7 @@ onUnmounted(() => {
 .resizer {
   transition: background 0.2s;
 }
+
 .resizer:hover {
   background: #d1d5db;
 }

@@ -9,11 +9,8 @@
           </p>
         </div>
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <button
-            type="button"
-            @click="showUploadModal = true"
-            class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200"
-          >
+          <button type="button" @click="showUploadModal = true"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200">
             <PlusIcon class="w-4 h-4 mr-2" />
             Upload CSV
           </button>
@@ -56,12 +53,8 @@
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <MagnifyingGlassIcon class="h-5 w-5 text-gray-400" />
                 </div>
-                <input
-                  v-model="searchQuery"
-                  type="text"
-                  placeholder="Search data sources by name..."
-                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-                />
+                <input v-model="searchQuery" type="text" placeholder="Search data sources by name..."
+                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm" />
               </div>
             </div>
             <div class="flex items-center space-x-4">
@@ -83,11 +76,8 @@
               {{ searchQuery ? 'Try adjusting your search terms.' : 'Get started by uploading your first CSV file.' }}
             </p>
             <div v-if="!searchQuery" class="mt-6">
-              <button
-                type="button"
-                @click="showUploadModal = true"
-                class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
-              >
+              <button type="button" @click="showUploadModal = true"
+                class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                 <PlusIcon class="w-4 h-4 mr-2" />
                 Upload CSV
               </button>
@@ -98,16 +88,20 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Name
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Description
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Category
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Created Date
                   </th>
                   <th scope="col" class="relative px-6 py-3">
@@ -116,11 +110,8 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr
-                  v-for="dataSource in paginatedDataSources"
-                  :key="dataSource.id"
-                  class="hover:bg-gray-50 transition-colors duration-150"
-                >
+                <tr v-for="dataSource in paginatedDataSources" :key="dataSource.id"
+                  class="hover:bg-gray-50 transition-colors duration-150">
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-10 w-10">
@@ -130,7 +121,8 @@
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">{{ dataSource.name }}</div>
-                        <div class="text-sm text-gray-500">{{ dataSource.rows.length.toLocaleString() }} rows, {{ dataSource.columns.length }} columns</div>
+                        <div class="text-sm text-gray-500">{{ dataSource.rows.length.toLocaleString() }} rows, {{
+                          dataSource.columns.length }} columns</div>
                       </div>
                     </div>
                   </td>
@@ -140,10 +132,8 @@
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                      :class="getCategoryColor(dataSource.category || 'General')"
-                    >
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                      :class="getCategoryColor(dataSource.category || 'General')">
                       {{ dataSource.category || 'General' }}
                     </span>
                   </td>
@@ -152,19 +142,15 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div class="flex items-center justify-end space-x-2">
-                      <button
-                        @click="selectedDataSource = dataSource"
+                      <button @click="selectedDataSource = dataSource"
                         class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-150"
-                        title="View Details"
-                      >
+                        title="View Details">
                         <EyeIcon class="h-4 w-4 mr-1" />
                         View
                       </button>
-                      <button
-                        @click="deleteDataSource(dataSource.id)"
+                      <button @click="deleteDataSource(dataSource.id)"
                         class="inline-flex items-center px-3 py-1.5 border border-red-300 shadow-sm text-xs font-medium rounded text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-150"
-                        title="Delete"
-                      >
+                        title="Delete">
                         <TrashIcon class="h-4 w-4 mr-1" />
                         Remove
                       </button>
@@ -176,20 +162,15 @@
           </div>
 
           <!-- Pagination -->
-          <div v-if="totalPages > 1" class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div v-if="totalPages > 1"
+            class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
             <div class="flex-1 flex justify-between sm:hidden">
-              <button
-                @click="prevPage"
-                :disabled="currentPage === 1"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+              <button @click="prevPage" :disabled="currentPage === 1"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                 Previous
               </button>
-              <button
-                @click="nextPage"
-                :disabled="currentPage === totalPages"
-                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+              <button @click="nextPage" :disabled="currentPage === totalPages"
+                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                 Next
               </button>
             </div>
@@ -199,7 +180,8 @@
                   Showing
                   <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
                   to
-                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredDataSources.length) }}</span>
+                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredDataSources.length)
+                  }}</span>
                   of
                   <span class="font-medium">{{ filteredDataSources.length }}</span>
                   results
@@ -207,34 +189,23 @@
               </div>
               <div>
                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                  <button
-                    @click="prevPage"
-                    :disabled="currentPage === 1"
-                    class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
+                  <button @click="prevPage" :disabled="currentPage === 1"
+                    class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                     <span class="sr-only">Previous</span>
                     <ChevronLeftIcon class="h-5 w-5" />
                   </button>
-                  
-                  <button
-                    v-for="page in visiblePages"
-                    :key="page"
-                    @click="goToPage(page)"
-                    :class="[
-                      'relative inline-flex items-center px-4 py-2 border text-sm font-medium',
-                      page === currentPage
-                        ? 'z-10 bg-primary-50 border-primary-500 text-primary-600'
-                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
-                    ]"
-                  >
+
+                  <button v-for="page in visiblePages" :key="page" @click="goToPage(page)" :class="[
+                    'relative inline-flex items-center px-4 py-2 border text-sm font-medium',
+                    page === currentPage
+                      ? 'z-10 bg-primary-50 border-primary-500 text-primary-600'
+                      : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                  ]">
                     {{ page }}
                   </button>
-                  
-                  <button
-                    @click="nextPage"
-                    :disabled="currentPage === totalPages"
-                    class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
+
+                  <button @click="nextPage" :disabled="currentPage === totalPages"
+                    class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                     <span class="sr-only">Next</span>
                     <ChevronRightIcon class="h-5 w-5" />
                   </button>
@@ -249,30 +220,21 @@
     <!-- Upload Modal -->
     <TransitionRoot :show="showUploadModal" as="template">
       <Dialog @close="showUploadModal = false" class="relative z-10">
-        <TransitionChild
-          as="template"
-          enter="ease-out duration-300"
-          enter-from="opacity-0"
-          enter-to="opacity-100"
-          leave="ease-in duration-200"
-          leave-from="opacity-100"
-          leave-to="opacity-0"
-        >
+        <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+          leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>
 
         <div class="fixed inset-0 z-10 overflow-y-auto">
           <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <TransitionChild
-              as="template"
-              enter="ease-out duration-300"
+            <TransitionChild as="template" enter="ease-out duration-300"
               enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enter-to="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
+              enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
               leave-from="opacity-100 translate-y-0 sm:scale-100"
-              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+              <DialogPanel
+                class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-6">
                   <div>
@@ -283,12 +245,11 @@
                       Add a new data source to your dashboard
                     </p>
                   </div>
-                  <button
-                    @click="showUploadModal = false"
-                    class="text-gray-400 hover:text-gray-600"
-                  >
+                  <button @click="showUploadModal = false" class="text-gray-400 hover:text-gray-600">
                     <XMarkIcon class="h-6 w-6" />
                   </button>
+
+
                 </div>
 
                 <!-- Form Content -->
@@ -298,14 +259,9 @@
                     <label for="dataSourceName" class="block text-sm font-medium text-gray-700 mb-2">
                       Data Source Name
                     </label>
-                    <input
-                      id="dataSourceName"
-                      v-model="uploadForm.name"
-                      type="text"
-                      required
+                    <input id="dataSourceName" v-model="uploadForm.name" type="text" required
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                      placeholder="Enter a descriptive name for your data source"
-                    />
+                      placeholder="Enter a descriptive name for your data source" />
                   </div>
 
                   <!-- Data Source Description -->
@@ -314,13 +270,9 @@
                       Description
                       <span class="text-gray-500 font-normal">(optional)</span>
                     </label>
-                    <textarea
-                      id="dataSourceDescription"
-                      v-model="uploadForm.description"
-                      rows="3"
+                    <textarea id="dataSourceDescription" v-model="uploadForm.description" rows="3"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                      placeholder="Describe what this data source contains..."
-                    />
+                      placeholder="Describe what this data source contains..." />
                   </div>
 
                   <!-- Data Source Category -->
@@ -328,11 +280,8 @@
                     <label for="dataSourceCategory" class="block text-sm font-medium text-gray-700 mb-2">
                       Category
                     </label>
-                    <select
-                      id="dataSourceCategory"
-                      v-model="uploadForm.category"
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                    >
+                    <select id="dataSourceCategory" v-model="uploadForm.category"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
                       <option value="General">General</option>
                       <option value="Sales">Sales</option>
                       <option value="Marketing">Marketing</option>
@@ -351,32 +300,16 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                       CSV File
                     </label>
-                    <div
-                      @drop="handleFileDrop"
-                      @dragover.prevent
-                      @dragenter.prevent
-                      @dragleave="isDragOver = false"
-                      @dragover="isDragOver = true"
-                      class="relative"
-                    >
-                      <input
-                        id="csvFile"
-                        ref="fileInput"
-                        type="file"
-                        accept=".csv"
-                        required
-                        @change="handleFileSelect"
-                        class="sr-only"
-                      />
-                      <label
-                        for="csvFile"
-                        :class="[
-                          'flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-md cursor-pointer transition-colors duration-200',
-                          isDragOver || uploadForm.file
-                            ? 'border-primary-400 bg-primary-50'
-                            : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
-                        ]"
-                      >
+                    <div @drop="handleFileDrop" @dragover.prevent @dragenter.prevent @dragleave="isDragOver = false"
+                      @dragover="isDragOver = true" class="relative">
+                      <input id="csvFile" ref="fileInput" type="file" accept=".csv" required @change="handleFileSelect"
+                        class="sr-only" />
+                      <label for="csvFile" :class="[
+                        'flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-md cursor-pointer transition-colors duration-200',
+                        isDragOver || uploadForm.file
+                          ? 'border-primary-400 bg-primary-50'
+                          : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
+                      ]">
                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
                           <div v-if="uploadForm.file" class="text-center">
                             <DocumentCheckIcon class="w-8 h-8 text-primary-600 mx-auto mb-2" />
@@ -416,22 +349,20 @@
 
                   <!-- Action Buttons -->
                   <div class="mt-6 flex justify-end space-x-3">
-                    <button
-                      type="button"
-                      @click="showUploadModal = false"
-                      class="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-                    >
+                    <button type="button" @click="showUploadModal = false"
+                      class="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
                       Cancel
                     </button>
-                    <button
-                      type="submit"
-                      :disabled="!uploadForm.file || !uploadForm.name || dataSourceStore.loading"
-                      class="inline-flex justify-center items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
+                    <button type="submit" :disabled="!uploadForm.file || !uploadForm.name || dataSourceStore.loading"
+                      class="inline-flex justify-center items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                       <span v-if="dataSourceStore.loading" class="flex items-center">
-                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
+                          fill="none" viewBox="0 0 24 24">
+                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                          </circle>
+                          <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                          </path>
                         </svg>
                         Processing...
                       </span>
@@ -450,124 +381,95 @@
     </TransitionRoot>
 
     <!-- Data Source Detail Modal -->
+    <!-- Data Source Detail Modal -->
     <TransitionRoot :show="!!selectedDataSource" as="template">
       <Dialog @close="selectedDataSource = null" class="relative z-10">
-        <TransitionChild
-          as="template"
-          enter="ease-out duration-300"
-          enter-from="opacity-0"
-          enter-to="opacity-100"
-          leave="ease-in duration-200"
-          leave-from="opacity-100"
-          leave-to="opacity-0"
-        >
+        <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+          leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>
 
         <div class="fixed inset-0 z-10 overflow-y-auto">
           <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <TransitionChild
-              as="template"
-              enter="ease-out duration-300"
+            <TransitionChild as="template" enter="ease-out duration-300"
               enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enter-to="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
+              enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
               leave-from="opacity-100 translate-y-0 sm:scale-100"
-              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
+              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+              <DialogPanel :class="[
+                'relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all',
+                isFullScreen
+                  ? 'fixed inset-0 z-50 m-0 p-6 overflow-auto'
+                  : 'px-4 pb-4 pt-5 sm:my-8 sm:w-full sm:max-w-4xl sm:p-6'
+              ]">
                 <div v-if="selectedDataSource">
-                  <!-- Header Section -->
+                  <!-- Header -->
                   <div class="flex items-center justify-between mb-6">
                     <div>
                       <h3 class="text-lg font-medium text-gray-900">{{ selectedDataSource.name }}</h3>
                       <p class="text-sm text-gray-500">
                         {{ selectedDataSource.rows.length }} rows, {{ selectedDataSource.columns.length }} columns
                       </p>
-                      <p v-if="selectedDataSource.description" class="text-sm text-gray-600 mt-1">
-                        {{ selectedDataSource.description }}
-                      </p>
-                      <div class="mt-2">
-                        <span
-                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                          :class="getCategoryColor(selectedDataSource.category || 'General')"
-                        >
-                          {{ selectedDataSource.category || 'General' }}
-                        </span>
-                      </div>
                     </div>
-                    <button
-                      @click="selectedDataSource = null"
-                      class="text-gray-400 hover:text-gray-600"
-                    >
-                      <XMarkIcon class="h-6 w-6" />
-                    </button>
-                  </div>
-                  
-                  <!-- Separator -->
-                  <div class="border-t border-gray-200 mb-6"></div>
-                  
-                  <!-- Columns Section -->
-                  <div class="mb-6">
-                    <h4 class="text-sm font-medium text-gray-900 mb-3">Columns</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                      <div
-                        v-for="column in selectedDataSource.columns"
-                        :key="column.name"
-                        class="flex items-center justify-between p-2 bg-gray-50 rounded"
-                      >
-                        <span class="text-sm font-medium">{{ column.name }}</span>
-                        <span
-                          class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
-                          :class="{
-                            'bg-blue-100 text-blue-800': column.type === 'number',
-                            'bg-green-100 text-green-800': column.type === 'date',
-                            'bg-gray-100 text-gray-800': column.type === 'string'
-                          }"
-                        >
-                          {{ column.type }}
-                        </span>
-                      </div>
+                    <div class="flex items-center gap-2">
+                      <button @click="selectedDataSource = null" class="text-gray-400 hover:text-gray-600">
+                        <XMarkIcon class="h-6 w-6" />
+                      </button>
+                      <button @click="toggleFullScreen" class="text-gray-400 hover:text-gray-600"
+                        :title="isFullScreen ? 'Exit Fullscreen' : 'Fullscreen'">
+                        <svg v-if="!isFullScreen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3H5a2 2 0 00-2 2v3m0 8v3a2  
+                        2 0 002 2h3m8-16h3a2 2 0 012 2v3m0 8v3a2  
+                        2 0 01-2 2h-3" />
+                        </svg>
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                          stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h6v6H4V4zm10 0h6v6h-6V4zm0  
+                        10h6v6h-6v-6zm-10 0h6v6H4v-6z" />
+                        </svg>
+                      </button>
                     </div>
                   </div>
 
-                  <!-- Separator -->
-                  <div class="border-t border-gray-200 mb-6"></div>
-
+                  <!-- Data Preview -->
                   <!-- Data Preview Section -->
                   <div>
-                    <h4 class="text-sm font-medium text-gray-900 mb-3">Data Preview (First 10 rows)</h4>
-                    <div class="overflow-x-auto">
-                      <table class="min-w-full divide-y divide-gray-200">
+                    <h4 class="text-sm font-medium text-gray-900 mb-3 flex items-center justify-between">
+                      Data Preview
+                      <button @click="toggleFullScreen" class="text-gray-500 hover:text-gray-700 focus:outline-none"
+                        :title="isFullScreen ? 'Exit Fullscreen' : 'Fullscreen'">
+                        <!-- your SVG icon -->
+                      </button>
+                    </h4>
+
+                    <!--
+    overflow-auto để cả hai chiều scroll được,
+    w-max để table luôn rộng vừa đủ nội dung,
+    whitespace-nowrap giữ nguyên một dòng,
+  -->
+                    <div class="overflow-auto" :class="isFullScreen ? 'h-full' : 'max-h-[400px]'">
+                      <table class="table-auto w-max whitespace-nowrap divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                           <tr>
-                            <th
-                              v-for="column in selectedDataSource.columns"
-                              :key="column.name"
-                              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                              {{ column.name }}
+                            <th v-for="col in selectedDataSource.columns" :key="col.name"
+                              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              {{ col.name }}
                             </th>
                           </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                          <tr
-                            v-for="(row, index) in selectedDataSource.rows.slice(0, 10)"
-                            :key="index"
-                            class="hover:bg-gray-50"
-                          >
-                            <td
-                              v-for="column in selectedDataSource.columns"
-                              :key="column.name"
-                              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
-                            >
-                              {{ row[column.name] }}
+                          <tr v-for="(row, i) in selectedDataSource.rows" :key="i" class="hover:bg-gray-50">
+                            <td v-for="col in selectedDataSource.columns" :key="col.name"
+                              class="px-6 py-4 text-sm text-gray-900">
+                              {{ row[col.name] }}
                             </td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
                   </div>
+
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -575,6 +477,7 @@
         </div>
       </Dialog>
     </TransitionRoot>
+
   </div>
 </template>
 
@@ -623,12 +526,18 @@ const uploadForm = reactive({
   file: null as File | null
 })
 
+const isFullScreen = ref(false)
+
+function toggleFullScreen() {
+  isFullScreen.value = !isFullScreen.value
+}
+
 // Computed properties for filtering and pagination
 const filteredDataSources = computed(() => {
   if (!searchQuery.value) {
     return dataSourceStore.dataSources
   }
-  
+
   const query = searchQuery.value.toLowerCase()
   return dataSourceStore.dataSources.filter(ds =>
     ds.name.toLowerCase().includes(query) ||
@@ -650,7 +559,7 @@ const visiblePages = computed(() => {
   const pages = []
   const total = totalPages.value
   const current = currentPage.value
-  
+
   if (total <= 7) {
     for (let i = 1; i <= total; i++) {
       pages.push(i)
@@ -678,7 +587,7 @@ const visiblePages = computed(() => {
       pages.push(total)
     }
   }
-  
+
   return pages
 })
 
@@ -747,7 +656,7 @@ const handleFileSelect = (event: Event) => {
 const handleFileDrop = (event: DragEvent) => {
   event.preventDefault()
   isDragOver.value = false
-  
+
   const files = event.dataTransfer?.files
   if (files && files.length > 0) {
     const file = files[0]
