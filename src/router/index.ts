@@ -7,6 +7,8 @@ import TemplateDesigner from '../views/TemplateDesigner.vue'
 import JournalComponent from '../views/JournalComponent.vue'
 import CsvTester from '../views/CsvTester.vue'
 import AI from '../views/AI.vue'
+import Profile from '../views/Profile.vue' 
+
 const routes = [
   {
     path: '/',
@@ -14,45 +16,10 @@ const routes = [
     component: Home
   },
   {
-    path: '/data-sources',
-    name: 'DataSources',
-    component: DataSources
-  },
-  {
-    path: '/dashboards',
-    name: 'DashboardStore',
-    component: DashboardStore
-  },
-  {
-    path: '/dashboard-store',
-    name: 'DashboardStoreAlias',
-    component: DashboardStore
-  },
-  {
-    path: '/quick-dashboard',
-    name: 'QuickDashboard',
-    component: QuickDashboard
-  },
-  {
-    path: '/template-designer',
-    name: 'TemplateDesigner',
-    component: TemplateDesigner
-  },
-  {
-    path: '/diary',
-    name: 'diary',
-    component: JournalComponent
-  },
-  {
-    path:'/csv-tester',
-    name: 'CsvTester',
-    component:CsvTester
-  },
-   {
-    path:'/AI',
-    name: 'AI',
-    component:AI
-  },
+    path:'/Profile',
+    name: 'Profile',
+    component:Profile
+  }
 ]
 
 export const router = createRouter({
