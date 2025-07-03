@@ -26,10 +26,8 @@
                 Upload and manage CSV files to create data sources for your charts and dashboards.
               </p>
               <div class="mt-3">
-                <router-link
-                  to="/data-sources"
-                  class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 transition-colors duration-200"
-                >
+                <router-link to="/data-sources"
+                  class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 transition-colors duration-200">
                   Manage Data Sources
                   <ArrowRightIcon class="ml-2 h-4 w-4" />
                 </router-link>
@@ -43,10 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import { 
-  ChartBarIcon, 
-  TableCellsIcon, 
-  PresentationChartLineIcon, 
+import {
+  ChartBarIcon,
+  TableCellsIcon,
+  PresentationChartLineIcon,
   Squares2X2Icon,
   ArrowRightIcon
 } from '@heroicons/vue/24/outline'

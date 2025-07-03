@@ -369,8 +369,8 @@ const chartTypes = [
   { value: 'line', label: 'Line', icon: PresentationChartLineIcon },
   { value: 'pie', label: 'Pie', icon: ChartPieIcon },
   { value: 'scatter', label: 'Scatter', icon: CircleStackIcon },
-  { value: 'bubble', label: 'Bubble', icon: CircleStackIcon },
-  { value: 'radar', label: 'Radar', icon: CircleStackIcon }
+  { value: 'bubble', label: 'Bubble', icon: PlusIcon },
+  { value: 'radar', label: 'Radar', icon: XMarkIcon }
 ] as const
 
 const selectedDataSource = computed(() => {
@@ -387,21 +387,18 @@ const isChartConfigValid = computed(() => {
 
     case 'bar':
       return Array.isArray(chartConfig.xAxis) &&
-             chartConfig.xAxis.length > 0 &&
-             !!chartConfig.yAxis
+        chartConfig.xAxis.length > 0 &&
+        !!chartConfig.yAxis
 
-    case 'bubble':       // xAxis (array), yAxis, category
-      return Array.isArray(chartConfig.xAxis) &&
-             chartConfig.xAxis.length > 0 &&
-             !!chartConfig.yAxis &&
-             !!chartConfig.category
+    case 'bubble':
+      return Array.isArray(chartConfig.xAxis) && chartConfig.xAxis.length > 0
+        && !!chartConfig.yAxis
+        && !!chartConfig.category    // size field phải có
 
     case 'radar':        // xAxis (array), yAxis, category
       return Array.isArray(chartConfig.xAxis) &&
-             chartConfig.xAxis.length > 0 &&
-             !!chartConfig.yAxis &&
-             !!chartConfig.category
-
+        chartConfig.xAxis.length > 0 &&
+        !!chartConfig.yAxis
     default:             // line, scatter…
       return !!chartConfig.xAxis && !!chartConfig.yAxis
   }
@@ -454,19 +451,27 @@ const onFieldDrop = (event: DragEvent, target: 'xAxis' | 'yAxis' | 'category') =
       // For non-bar charts or when replacing a single field, allow the change
       // This will effectively replace the existing field and data source
     }
-    if (selectedChartType.value == 'bubble') {
-      // bubble cần xAxis, yAxis và category (kích thước)
-      if (['xAxis', 'yAxis', 'category'].includes(target)) {
-        chartConfig[target] = fieldData.name
+    if (selectedChartType.value === 'bubble') {
+      // bubble: 1 trường cho xAxis (mảng), 1 cho yAxis, 1 cho category
+      if (target === 'xAxis') {
+        chartConfig.xAxis = [fieldData.name]          // luôn mảng
+      } else if (target === 'yAxis') {
+        chartConfig.yAxis = fieldData.name
+      } else {                                        // category
+        chartConfig.category = fieldData.name
       }
       chartConfig.dataSourceId = fieldData.dataSourceId
       return
     }
 
-    if (selectedChartType.value == 'radar') {
-      // radar cần category và yAxis
-      if (['category', 'yAxis'].includes(target)) {
-        chartConfig[target] = fieldData.name
+    if (selectedChartType.value === 'radar') {
+      // radar: xAxis (mảng nhãn trục), yAxis (giá trị), category (nhãn nhóm)
+      if (target === 'xAxis') {
+        chartConfig.xAxis = [fieldData.name]
+      } else if (target === 'yAxis') {
+        chartConfig.yAxis = fieldData.name
+      } else {
+        chartConfig.category = fieldData.name
       }
       chartConfig.dataSourceId = fieldData.dataSourceId
       return

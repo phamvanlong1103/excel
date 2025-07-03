@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
-export type ChartType = 'bar' | 'line' | 'pie' | 'card' | 'scatter' | 'area' | 'donut' | 'radar' | 'bubble' // thêm area, donut nếu cần
+export type ChartType = 'bar' | 'line' | 'pie' | 'scatter' | 'bubble' | 'radar' | 'polarArea' | 'mixed' | 'card' // thêm area, donut nếu cần
 
 export interface ChartConfig {
   id: string

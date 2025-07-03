@@ -31,7 +31,8 @@ import {
   PieController,
   ScatterController,
   ChartConfiguration,
-  ChartType
+  ChartType,
+  BubbleController,
 } from 'chart.js'
 import { ExclamationTriangleIcon, ChartBarIcon } from '@heroicons/vue/24/outline'
 import { useDataSourceStore } from '../stores/dataSource'
@@ -53,7 +54,9 @@ ChartJS.register(
   BarController,
   LineController,
   PieController,
-  ScatterController
+  ScatterController,
+  BubbleController,
+  PointElement
 )
 
 interface Props {
@@ -72,13 +75,21 @@ const hasValidData = computed(() => {
   if (!props.chart.dataSourceId || !props.chart.type) return false
   const dataSource = dataSourceStore.getDataSourceById(props.chart.dataSourceId)
   if (!dataSource || dataSource.rows.length === 0) return false
-  
+
   if (props.chart.type === 'card') {
     return !!props.chart.keyMetric
   } else if (props.chart.type === 'pie') {
     return !!props.chart.category
   } else if (props.chart.type === 'bar') {
     return Array.isArray(props.chart.xAxis) ? props.chart.xAxis.length > 0 && !!props.chart.yAxis : !!props.chart.xAxis && !!props.chart.yAxis
+  }
+  else if (props.chart.type === 'scatter') {
+    return !!props.chart.xAxis && !!props.chart.yAxis
+  } else if (props.chart.type === 'bubble') {
+    // X-Axis bắt buộc là mảng có ít nhất 1 phần tử,
+    // Y-Axis và category (làm size) đều phải có
+    const xok = Array.isArray(props.chart.xAxis) && props.chart.xAxis.length > 0
+    return xok && !!props.chart.yAxis && !!props.chart.category
   } else {
     return !!props.chart.xAxis && !!props.chart.yAxis
   }
@@ -283,7 +294,77 @@ const createChart = async () => {
           borderWidth: 1
         }]
       }
-    } else if (props.chart.type === 'bar') {
+    }
+    else if (props.chart.type === 'bubble') {
+      const xField = Array.isArray(props.chart.xAxis) ? props.chart.xAxis[0]! : props.chart.xAxis!
+      const yField = props.chart.yAxis!
+      const sizeField = props.chart.category!
+
+      // Lấy list category để làm labels cho trục X
+      const categories = [...new Set(dataSource.rows.map(r => r[xField]))]
+
+      // Tính min/max size để scale radius
+      const rawSizes = dataSource.rows.map(r => Number(r[sizeField])).filter(v => !isNaN(v))
+      const minRaw = Math.min(...rawSizes), maxRaw = Math.max(...rawSizes)
+      const minR = 4, maxR = 20
+
+      // Build point array
+      const points = dataSource.rows.map(row => {
+        const x = row[xField]            // string
+        const y = Number(row[yField])    // number
+        const raw = Number(row[sizeField])
+        if (typeof x !== 'string' || isNaN(y) || isNaN(raw)) return null
+        const r = minR + (raw - minRaw) / (maxRaw - minRaw) * (maxR - minR)
+        return { x, y, r }
+      }).filter((pt): pt is { x: string, y: number, r: number } => pt !== null)
+
+      if (!points.length) {
+        error.value = 'No valid data points'
+        return
+      }
+
+      chartData = {
+        datasets: [{
+          label: props.chart.title || `${yField} vs ${xField}`,
+          data: points,
+          backgroundColor: props.chart.backgroundColor || 'rgba(59,130,246,0.6)',
+          borderColor: props.chart.borderColor || '#3b82f6'
+        }]
+      }
+
+      chartOptions.scales = {
+        x: {
+          type: 'category',
+          labels: categories,
+          title: { display: true, text: xField, font: { size: 10 } }
+        },
+        y: {
+          type: 'linear',
+          title: { display: true, text: yField, font: { size: 10 } }
+        }
+      }
+      // … sau khi gán chartOptions.scales
+      chartOptions.plugins = {
+        ...chartOptions.plugins,
+        tooltip: {
+          callbacks: {
+            // loại bỏ title mặc định
+            title: () => '',
+            // mỗi dòng label sẽ hiển thị đúng tên cột & giá trị
+            label: (ctx:any) => {
+              const { x, y, r } = ctx.raw as { x: string; y: number; r: number }
+              return [
+                `${xField}: ${x}`,
+                `${yField}: ${y}`,
+                `${sizeField}: ${Math.round((r - minR) / (maxR - minR) * (maxRaw - minRaw) + minRaw)}`
+              ]
+            }
+          }
+        }
+      }
+
+    }
+    else if (props.chart.type === 'bar') {
       // Multi-dimension grouping for bar chart
       const xAxes = Array.isArray(props.chart.xAxis) ? props.chart.xAxis : props.chart.xAxis ? [props.chart.xAxis] : [];
       const yAxis = props.chart.yAxis
@@ -357,7 +438,7 @@ const createChart = async () => {
     } else {
       const xColumn = dataSource.columns.find(c => c.name === props.chart.xAxis)
       const yColumn = dataSource.columns.find(c => c.name === props.chart.yAxis)
-      
+
       if (!xColumn || !yColumn) {
         error.value = 'Required columns not found'
         return
@@ -389,7 +470,7 @@ const createChart = async () => {
             pointHoverRadius: 4
           }]
         }
-        
+
         chartOptions.scales = {
           x: {
             type: 'linear',
@@ -497,7 +578,7 @@ const createChart = async () => {
 
     // Wait for next tick to ensure canvas is ready
     await nextTick()
-    
+
     if (canvasRef.value) {
       chartInstance = new ChartJS(canvasRef.value, config)
     }
@@ -513,7 +594,7 @@ const generateColors = (count: number) => {
     '#06b6d4', '#f97316', '#84cc16', '#ec4899', '#6366f1',
     '#14b8a6', '#f43f5e', '#a855f7', '#22c55e', '#eab308'
   ]
-  
+
   const result = []
   for (let i = 0; i < count; i++) {
     result.push(colors[i % colors.length])
@@ -524,13 +605,13 @@ const generateColors = (count: number) => {
 // Watch for changes and recreate chart
 watch(
   () => [
-    props.chart.dataSourceId, 
-    props.chart.type, 
-    props.chart.xAxis, 
-    props.chart.yAxis, 
-    props.chart.category, 
-    props.chart.backgroundColor, 
-    props.chart.borderColor, 
+    props.chart.dataSourceId,
+    props.chart.type,
+    props.chart.xAxis,
+    props.chart.yAxis,
+    props.chart.category,
+    props.chart.backgroundColor,
+    props.chart.borderColor,
     props.chart.title,
     props.chart.keyMetric,
     props.chart.previousMetric,

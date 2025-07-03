@@ -4,8 +4,9 @@ import DataSources from '../views/DataSources.vue'
 import QuickDashboard from '../views/QuickDashboard.vue'
 import DashboardStore from '../views/DashboardStore.vue'
 import TemplateDesigner from '../views/TemplateDesigner.vue'
-import Total from '../views/Total.vue'
-
+import JournalComponent from '../views/JournalComponent.vue'
+import CsvTester from '../views/CsvTester.vue'
+import AI from '../views/AI.vue'
 const routes = [
   {
     path: '/',
@@ -36,6 +37,21 @@ const routes = [
     path: '/template-designer',
     name: 'TemplateDesigner',
     component: TemplateDesigner
+  },
+  {
+    path: '/diary',
+    name: 'diary',
+    component: JournalComponent
+  },
+  {
+    path:'/csv-tester',
+    name: 'CsvTester',
+    component:CsvTester
+  },
+   {
+    path:'/AI',
+    name: 'AI',
+    component:AI
   },
 ]
 
