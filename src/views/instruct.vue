@@ -11,7 +11,7 @@ const user = ref({
 // bên trong <script setup>
 const resources = [
     { title: 'Cách cài đặt tài khoản veo3', url: 'https://docs.google.com/document/d/1-8g1fMhHKbM5d9URjFS_DvlCzYxP3PuQqQq27R9A9hQ/edit?usp=sharing' },
-    { title: 'Prompt tổng hợp VEO3 Triệu View', url: 'https://docs.google.com/document/d/1-8g1fMhHKbM5d9URjFS_DvlCzYxP3PuQqQq27R9A9hQ/edit?usp=sharing' },
+    { title: 'Prompt tổng hợp VEO3 Triệu View', url: 'https://docs.google.com/spreadsheets/d/1f2r5TUTYWN_IzLnHi48LM8cEPN9B0K-kbBgadRP03RM/edit?usp=sharing' },
 ]
 
 </script>
